@@ -43,4 +43,4 @@ This repository documents my transition from basic firmware implementation to ad
 ## 📚 Academic Context
 **Author:** First Year Computer Science Student  
 **Objective:** Building a research-grade portfolio for future specialization in Robotics and AI.
-hello
+
