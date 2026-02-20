@@ -24,5 +24,10 @@ Before
 After
 <img width="922" height="414" alt="image" src="https://github.com/user-attachments/assets/fc13100b-cabc-4c57-98fe-c1ec8a422c57" />
 
+### 3. CI/CD Notification Bridge (Discord Webhook)
+- **Issue:** Initial webhook delivery failed with a `400 Invalid HTTP Response`.
+- **Solution:** Adjusted the Payload URL to include the `/github` suffix and switched the Content-Type to `application/json`.
+- **Result:** Real-time push notifications are now successfully broadcasting to the "Oxford Lab" Discord server.
+
 ## 💡 Notes & Research
 The V4.0 kit uses a different motor driver than previous versions. I need to ensure that the libraries I use tomorrow are compatible with the specific pinout of the V4.0 expansion board.
