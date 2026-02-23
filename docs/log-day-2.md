@@ -29,3 +29,5 @@
 While flashing the Day 2 firmware, I encountered a persistent Serial communication conflict. Because the Arduino Uno uses the same RX/TX pins (0 and 1) for both USB programming and peripheral communication, the Bluetooth/Camera module was creating signal interference on the bus.
 
 **Solution:** I performed a **manual hardware bypass** by physically unplugging the UART interface from the expansion shield. This isolated the microcontroller's receive/transmit lines, allowing for a clean data transfer from the IDE. After the firmware was successfully flashed, the UART link was re-established to enable integrated system testing.
+
+I spent three hours wondering why the motors wouldn't turn before realizing the STBY pin was the culprit. This taught me that hardware often requires a specific logic 'wake-up' signal that isn't always obvious in the high-level code.
