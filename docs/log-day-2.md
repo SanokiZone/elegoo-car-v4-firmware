@@ -1,30 +1,27 @@
-# Engineering Log: Day 2 - Actuation & Perception Validation
+# Build Log - Day 2: Firmware Integration & Perception Logic
+**Date:** February 22, 2026
+**Status:** Drivetrain & Sensor Logic 100% Operational
 
-## 🗓️ Date: [Insert Date], 2026
-## 🛠️ Status: Success - Motors & Sensors Operational
+## 🎯 Objectives
+- Transition from mobile app control to autonomous C++ firmware.
+- Resolve "No Movement" hardware state via low-level logic debugging.
+- Calibrate the HC-SR04 ultrasonic sensor for real-time distance mapping.
 
----
+## 🛠️ Progress & Documentation
+### 1. Motor Driver Logic Debugging
+- Identified a hardware "Sleep" state inhibiting motor torque.
+- **Breakthrough:** Discovered that the **STBY (Standby)** pin on the TB6612FNG driver must be set to `HIGH` (Digital Pin 3) to enable the H-Bridge.
+- Verified that the physical **Upload/Drive** slider switch must be set to 'Drive' to bridge the UART-to-Motor signal path.
 
-## 📋 Objective
-To resolve hardware-software communication issues for the drivetrain and calibrate the ultrasonic proximity sensor for distance measurement.
+### 2. Drivetrain Actuation
+- Successfully implemented 4WD movement using PWM (Pulse Width Modulation) for speed control.
+- Validated a 2000ms "Pulse" test to confirm wiring integrity for all four gear motors.
+- **Reference:** `media/firmware-tests/motor-pulse-test.mp4`
 
-## 🔍 Diagnostic Process
-1.  **Motor Driver Troubleshooting**: Identified that the SmartCar-Shield-V1.1 utilizes a **TB6612FNG** driver which requires the **STBY (Standby) Pin 3** to be set to `HIGH` to wake the system.
-2.  **Mode Switching**: Configured the physical slider switch on the shield to 'Drive' mode, allowing the MCU to route PWM signals to the H-Bridge.
-3.  **Sensor Calibration**: Initialized the **HC-SR04 Ultrasonic Sensor** via the `Trig` and `Echo` pins. Verified that the sensor accurately calculates distance by measuring the time-of-flight of sonic pulses.
+### 3. Perception & Sensor Calibration
+- Initialized the ultrasonic "eyes" by triggering 10μs sonic bursts.
+- Developed a conversion formula to translate "time-of-flight" duration into centimeter-based distance data.
+- Confirmed stable distance readings, providing the foundation for autonomous collision avoidance.
 
-## 💡 Technical Breakthroughs
-* **The "Standby" Fix**: Discovered that Pin 3 must be energized for any motor movement to occur on the V4.0+ hardware.
-* **Distance Logic**: Successfully converted duration (micro-seconds) into distance (centimeters), allowing the robot to "see" obstacles in its path.
-
-## 💻 Working Test Code Snippets
-```cpp
-// Motor Wake-up
-digitalWrite(STBY, HIGH); 
-
-// Sensor Distance Logic (Conceptual)
-digitalWrite(trigPin, HIGH);
-delayMicroseconds(10);
-digitalWrite(trigPin, LOW);
-long duration = pulseIn(echoPin, HIGH);
-int distance = duration * 0.034 / 2; // Speed of sound calculation
+### 4. System Verification
+- **Software:** Deployed custom firmware bypassing the default Elegoo libraries to confirm pin-to
