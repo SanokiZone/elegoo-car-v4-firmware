@@ -16,7 +16,6 @@
 ### 2. Drivetrain Actuation
 - Successfully implemented 4WD movement using PWM (Pulse Width Modulation) for speed control.
 - Validated a 2000ms "Pulse" test to confirm wiring integrity for all four gear motors.
-- **Reference:** `media/firmware-tests/motor-pulse-test.mp4`
 
 ### 3. Perception & Sensor Calibration
 - Initialized the ultrasonic "eyes" by triggering 10μs sonic bursts.
@@ -25,3 +24,8 @@
 
 ### 4. System Verification
 - **Software:** Deployed custom firmware bypassing the default Elegoo libraries to confirm pin-to
+
+### 🛠️ UART Signal Isolation
+During the deployment phase, identified a serial communication conflict between the **Arduino Uno** and the **ESP32 Camera Module**. Because both devices share the hardware UART bus (Pins 0 and 1), the MCU was unable to accept new firmware while the shield was active.
+
+**Action Taken:** Utilized the physical **UART Selection Switch** on the SmartCar-Shield-V1.1 to isolate the RX/TX lines. By shifting the slider to the 'Upload' position, I manually cleared the bus for USB communication. Once the upload was verified, the switch was returned to the 'Drive' state to restore internal signal routing between the logic and motor driver layers.
