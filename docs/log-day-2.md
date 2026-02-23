@@ -25,7 +25,7 @@
 ### 4. System Verification
 - **Software:** Deployed custom firmware bypassing the default Elegoo libraries to confirm pin-to
 
-### 🛠️ UART Signal Isolation
-During the deployment phase, identified a serial communication conflict between the **Arduino Uno** and the **ESP32 Camera Module**. Because both devices share the hardware UART bus (Pins 0 and 1), the MCU was unable to accept new firmware while the shield was active.
+### 🔧 Manual Hardware Debugging: UART Conflict
+While flashing the Day 2 firmware, I encountered a persistent Serial communication conflict. Because the Arduino Uno uses the same RX/TX pins (0 and 1) for both USB programming and peripheral communication, the Bluetooth/Camera module was creating signal interference on the bus.
 
-**Action Taken:** Utilized the physical **UART Selection Switch** on the SmartCar-Shield-V1.1 to isolate the RX/TX lines. By shifting the slider to the 'Upload' position, I manually cleared the bus for USB communication. Once the upload was verified, the switch was returned to the 'Drive' state to restore internal signal routing between the logic and motor driver layers.
+**Solution:** I performed a **manual hardware bypass** by physically unplugging the UART interface from the expansion shield. This isolated the microcontroller's receive/transmit lines, allowing for a clean data transfer from the IDE. After the firmware was successfully flashed, the UART link was re-established to enable integrated system testing.
